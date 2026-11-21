@@ -12,6 +12,11 @@ const here = fileURLToPath(new URL('.', import.meta.url));
 const out = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
 if (!existsSync(join(here, 'app', 'index.html'))) throw new Error('Golden Hour requires app/index.html');
 if (!existsSync(join(here, 'app', 'src', 'studio.js'))) throw new Error('Golden Hour editor module is missing');
+for (const capture of ['1-cover.jpg', '2-editor.jpg', '3-portrait.jpg', '4-square.jpg']) {
+  if (!existsSync(join(here, 'screenshots', capture))) {
+    throw new Error(`Golden Hour requires the verified capture: ${capture}`);
+  }
+}
 
 mkdirSync(out, { recursive: true });
 cpSync(join(here, 'app'), join(out, 'app'), { recursive: true });
